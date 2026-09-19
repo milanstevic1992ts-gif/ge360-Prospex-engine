@@ -10,9 +10,9 @@ Prospex resta il progetto upstream principale. Questa repository contiene solo c
 - fissare una versione upstream verificata;
 - applicare piccole patch di compatibilità GE360;
 - configurare l'ambiente;
-- avviare/fermare/aggiornare il motore;
-- preparare in seguito il pacchetto Debian `.deb`;
-- collegare Prospex a GE360 Core tramite REST API.
+- avviare, controllare e aggiornare il motore;
+- produrre un pacchetto Debian `.deb` leggero;
+- collegare in seguito Prospex a GE360 Core tramite REST API.
 
 ## Upstream
 
@@ -40,7 +40,36 @@ GE360 Prospex Engine
     |   +-- scraper / AI
     |
     +-- configurazione GE360
-    +-- update / doctor / backup
+    +-- update / status / packaging
+```
+
+## Installazione prevista
+
+Dopo aver scaricato l'artefatto `.deb` prodotto da GitHub Actions:
+
+```bash
+sudo apt install ./ge360-prospex-engine_0.1.0_all.deb
+sudo ge360-prospex-install
+```
+
+Comandi principali:
+
+```bash
+ge360-prospex-status
+sudo ge360-prospex-update
+sudo ge360-prospex-uninstall
+```
+
+Dashboard predefinita:
+
+```text
+http://localhost:8788
+```
+
+API / Swagger:
+
+```text
+http://localhost:8788/api/docs
 ```
 
 ## Stato
@@ -49,11 +78,12 @@ GE360 Prospex Engine
 - [x] Repository dedicata
 - [x] Strategia upstream senza fork pesante
 - [x] Versione upstream bloccata
-- [ ] Installer Linux
-- [ ] Configurazione persistente
-- [ ] Patch runtime GE360
-- [ ] Doctor / status
-- [ ] Update controllato
+- [x] Installer Linux
+- [x] Configurazione persistente
+- [x] Patch runtime GE360
+- [x] Status / health check
+- [x] Update controllato
+- [x] Migrazioni database automatiche
 
 ### Fase 2
 - [ ] Adapter GE360 Core
@@ -62,10 +92,10 @@ GE360 Prospex Engine
 - [ ] Backup / restore
 
 ### Fase 3
-- [ ] Packaging Debian
-- [ ] systemd
-- [ ] GitHub Actions per build `.deb`
-- [ ] Release installabile
+- [x] Packaging Debian
+- [ ] systemd dedicato
+- [x] GitHub Actions per build `.deb`
+- [ ] Release installabile verificata su Debian
 
 ## Licenza
 
