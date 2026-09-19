@@ -1,0 +1,4 @@
+UPSTREAM_REPO="https://github.com/asiifdev/business-leads-ai-automation.git"
+UPSTREAM_COMMIT="5b3e260d3291a201c61240387cbcfd84979476c1"
+UPSTREAM_DATE="2026-08-18"
+UPSTREAM_LICENSE="MIT"
