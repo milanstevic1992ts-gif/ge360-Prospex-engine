@@ -1,0 +1,6 @@
+.env
+*.deb
+build/
+dist/
+.cache/
+*.log
