@@ -22,8 +22,17 @@ if grep -q 'ENV NEXT_PUBLIC_API_URL=http://api:3001/api' "$SRC_DIR/apps/web/Dock
   sed -i 's|ENV NEXT_PUBLIC_API_URL=http://api:3001/api|ENV NEXT_PUBLIC_API_URL=/api|' "$SRC_DIR/apps/web/Dockerfile"
 fi
 
+if ! grep -qE 'libasound2.*wget|wget.*libasound2' "$SRC_DIR/apps/api/Dockerfile"; then
+  sed -i 's/libcairo2 libasound2 libxshmfence1/libcairo2 libasound2 wget libxshmfence1/' "$SRC_DIR/apps/api/Dockerfile"
+fi
+
 cp "$REPO_ROOT/config/nginx-ge360.conf" "$SRC_DIR/nginx.conf"
 ln -sfn "$ENV_FILE" "$SRC_DIR/.env"
 
-docker compose --env-file "$ENV_FILE" -f "$SRC_DIR/docker-compose.prod.yml" up -d --build
+COMPOSE=(docker compose --env-file "$ENV_FILE" -f "$SRC_DIR/docker-compose.prod.yml")
+
+"${COMPOSE[@]}" up -d --build postgres redis api
+"${COMPOSE[@]}" exec -T api sh -lc 'cd /app && pnpm --filter @prospex/database db:deploy'
+"${COMPOSE[@]}" up -d --build web nginx
+
 echo "GE360 Prospex aggiornato al commit $UPSTREAM_COMMIT"
